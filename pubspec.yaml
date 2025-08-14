@@ -1,6 +1,6 @@
 name: nom_nom
 description: "A new Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none' 
 
 version: 1.0.0+1
 
@@ -8,9 +8,14 @@ environment:
   sdk: ^3.8.1
 
 dependencies:
+  camera: ^0.11.2
   flutter:
     sdk: flutter
   flutter_svg: ^2.2.0
+  flutter_tts: ^4.2.3
+  google_mlkit_object_detection: ^0.15.0
+  path: ^1.9.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
