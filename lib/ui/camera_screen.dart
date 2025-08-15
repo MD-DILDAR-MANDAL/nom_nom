@@ -108,17 +108,47 @@ class _CameraScreenState extends State<CameraScreen> {
     );
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text("Detected Labels"),
-        content: Text(labelList),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text("OK"),
-          ),
-        ],
-      ),
+      builder: (_) {
+        double scaleValue = 0.5;
+        return StatefulBuilder(
+          builder: (context, setState) {
+            Future.delayed(Duration(milliseconds: 30), () {
+              setState(() => scaleValue = 1.0);
+            });
+            return AlertDialog(
+              icon: AnimatedScale(
+                scale: scaleValue,
+                duration: Duration(seconds: 1),
+                curve: Curves.easeIn,
+                child: SvgPicture.asset("assets/icons/cat.svg"),
+              ),
+              backgroundColor: secondary,
+              title: Text(
+                "Detected Labels",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              content: Text(
+                labelList,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("OK", style: TextStyle(color: Colors.white)),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
+    ;
 
     await Future.delayed(Duration(milliseconds: 300));
     await flutterTts.awaitSpeakCompletion(true);
