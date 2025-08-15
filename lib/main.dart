@@ -1,5 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:nom_nom/model/history_item.dart';
 import 'package:nom_nom/theme_profile.dart';
 import 'package:nom_nom/ui/bottom_navigation.dart';
 
@@ -7,6 +9,9 @@ late List<CameraDescription> cameras;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
+  await Hive.initFlutter();
+  Hive.registerAdapter(HistoryAdapter());
+  await Hive.openBox('detection_history');
   runApp(MyApp(cameras: cameras));
 }
 

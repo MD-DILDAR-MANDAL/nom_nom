@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
+import 'package:hive/hive.dart';
+import 'package:nom_nom/model/history_item.dart';
 import 'package:nom_nom/theme_profile.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -31,6 +33,12 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primary,
@@ -49,7 +57,12 @@ class _CameraScreenState extends State<CameraScreen> {
       body: Stack(
         children: [
           _isCameraInitialized
-              ? SizedBox.expand(child: CameraPreview(_controller))
+              ? SizedBox.expand(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CameraPreview(_controller),
+                  ),
+                )
               : Center(child: CircularProgressIndicator()),
           Positioned(
             left: 0,
@@ -85,6 +98,14 @@ class _CameraScreenState extends State<CameraScreen> {
               .join('\n')
         : "No labels found";
 
+    var box = Hive.box('detection_history');
+    await box.add(
+      History(
+        location: image.path,
+        labels: labels.map((l) => l.label).toList(),
+        timeStamp: DateTime.now(),
+      ),
+    );
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
