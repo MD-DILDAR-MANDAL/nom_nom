@@ -1,4 +1,4 @@
-# nom_nom
+<h1 style="text-align: center";> nom_nom</h1>
 
 Kid friendly fun & easy object detection app with voice feedback!
 
