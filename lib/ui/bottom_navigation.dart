@@ -40,20 +40,9 @@ class _NavigationState extends State<Navigation> {
         },
         backgroundColor: primary,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.white,
+        selectedItemColor: secondary,
         unselectedItemColor: Colors.black,
         items: [
-          // BottomNavigationBarItem(
-          //   icon: AnimatedContainer(
-          //     duration: Duration(seconds: 5),
-          //     curve: Curves.bounceInOut,
-          //     child: Image.asset(
-          //       "assets/icons/Mushrooms.png",
-          //       height: _currentState == 0 ? 80 : 60,
-          //     ),
-          //   ),
-          //   label: 'Game',
-          // ),
           BottomNavigationBarItem(
             icon: AnimatedContainer(
               duration: Duration(seconds: 5),
@@ -63,7 +52,7 @@ class _NavigationState extends State<Navigation> {
                 height: _currentState == 0 ? 80 : 60,
               ),
             ),
-            label: 'Camera',
+            label: 'DETECT',
           ),
           BottomNavigationBarItem(
             icon: AnimatedContainer(
@@ -74,7 +63,7 @@ class _NavigationState extends State<Navigation> {
                 height: _currentState == 1 ? 80 : 60,
               ),
             ),
-            label: 'History',
+            label: 'HISTORY',
           ),
         ],
       ),

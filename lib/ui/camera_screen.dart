@@ -106,52 +106,57 @@ class _CameraScreenState extends State<CameraScreen> {
         timeStamp: DateTime.now(),
       ),
     );
-    showDialog(
-      context: context,
-      builder: (_) {
-        double scaleValue = 0.5;
-        return StatefulBuilder(
-          builder: (context, setState) {
-            Future.delayed(Duration(milliseconds: 30), () {
-              setState(() => scaleValue = 1.0);
-            });
-            return AlertDialog(
-              icon: AnimatedScale(
-                scale: scaleValue,
-                duration: Duration(seconds: 1),
-                curve: Curves.easeIn,
-                child: SvgPicture.asset("assets/icons/cat.svg"),
-              ),
-              backgroundColor: secondary,
-              title: Text(
-                "Detected Labels",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              content: Text(
-                labelList,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text("OK", style: TextStyle(color: Colors.white)),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-    ;
+    resultGenerate(labelList);
 
     await Future.delayed(Duration(milliseconds: 300));
     await flutterTts.awaitSpeakCompletion(true);
     await flutterTts.speak(labelList.replaceAll('\n', '. '));
+  }
+
+  Future<dynamic> resultGenerate(String labelList) {
+    return showDialog(
+    context: context,
+    builder: (_) {
+      double scaleValue = 0.5;
+      return StatefulBuilder(
+        builder: (context, setState) {
+          Future.delayed(Duration(milliseconds: 30), () {
+            setState(() => scaleValue = 1.0);
+          });
+          return AlertDialog(
+            icon: AnimatedScale(
+              scale: scaleValue,
+              duration: Duration(seconds: 1),
+              curve: Curves.easeIn,
+              child: SvgPicture.asset("assets/icons/cat.svg"),
+            ),
+            backgroundColor: secondary,
+            title: Text(
+              "Detected Labels",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Text(
+              textAlign: TextAlign.center,
+              labelList,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("OK", style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
   }
 }

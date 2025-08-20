@@ -50,6 +50,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               itemCount: items.length,
               itemBuilder: (context, index) {
                 final item = items[items.length - index - 1];
+                final itemKey = item.key;
                 return Row(
                   children: [
                     SvgPicture.asset(
@@ -91,10 +92,27 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                       _formatTime(item.timeStamp),
                                       style: TextStyle(
                                         color: Colors.white,
+                                        fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                       ),
                                     ),
                                   ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  await Hive.box(
+                                    'detection_history',
+                                  ).delete(itemKey);
+                                  final File imgFile = File(item.location);
+                                  if (await imgFile.exists()) {
+                                    await imgFile.delete();
+                                  }
+                                  setState(() {});
+                                },
+                                child: Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.redAccent,
                                 ),
                               ),
                             ],
